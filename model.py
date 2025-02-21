@@ -81,7 +81,7 @@ if swing_filter == "Swung":
     filtered_df = filtered_df[filtered_df["swing"] == 1]
 elif swing_filter == "Did Not Swing":
     filtered_df = filtered_df[filtered_df["swing"] == 0]
-elif swing_filter == "Hit Home Run":
+elif swing_filter == "Hit a Home Run":
     filtered_df = filtered_df[filtered_df["events"] == "home_run"]
 elif swing_filter == "Recorded a Base Hit":
     filtered_df = filtered_df[filtered_df["events"].isin(["single", "double", "triple", "home_run"])]
