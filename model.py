@@ -11,6 +11,14 @@ from sklearn.preprocessing import LabelEncoder
 df = pd.read_csv("devers_data.csv")
 df["swing"] = df["description"].isin(["swinging_strike", "foul", "hit_into_play"]).astype(int)
 
+pitch_type_mapping = {
+    "CH": "Changeup", "CU": "Curveball", "FC": "Cutter", "FF": "Four-seam Fastball",
+    "FS": "Splitter", "KC": "Knuckle-curve", "KN": "Knuckleball", "SI": "Sinker",
+    "SL": "Slider", "ST": "Sweeper", "SV": "Slurve"
+}
+
+df["pitch_type"] = df["pitch_type"].map(pitch_type_mapping)
+
 # desired features
 features = ["pitch_type", "plate_x", "plate_z", "release_speed", "spin_axis", 
             "balls", "strikes", "inning", "outs_when_up", "bat_score", "fld_score"]
@@ -38,8 +46,8 @@ st.title("Rafael Devers Swing Analysis")
 # define inputs
 st.sidebar.header("Swing Probability Prediction")
 pitch_type = st.sidebar.selectbox("Pitch Type", label_encoders["pitch_type"].classes_)
-plate_x = st.sidebar.slider("Horizontal Location (plate_x)", -2.0, 2.0, 0.0)
-plate_z = st.sidebar.slider("Vertical Location (plate_z)", 0.0, 4.0, 2.0)
+plate_x = st.sidebar.slider("Horizontal Location (ft. from center of strike zone)", -2.0, 2.0, 0.0)
+plate_z = st.sidebar.slider("Vertical Location (ft. above ground)", 0.0, 4.0, 2.0)
 release_speed = st.sidebar.slider("Pitch Speed (MPH)", 70, 100, 90)
 spin_axis = st.sidebar.slider("Spin Axis", 0, 360, 180)
 balls = st.sidebar.slider("Balls Count", 0, 3, 0)
